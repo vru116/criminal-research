@@ -1,5 +1,5 @@
 data_full_murders_with_accused_v20240328.csv
-data_full_murders.pkl
+data_full_murders_with_accused_v20240328.zip
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -133,6 +133,7 @@ celerybeat.pid
 .env
 .venv
 env/
+myenv/
 venv/
 ENV/
 env.bak/
