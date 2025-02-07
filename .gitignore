@@ -1,5 +1,10 @@
 data_full_murders_with_accused_v20240328.csv
 data_full_murders_with_accused_v20240328.zip
+filtered_data.csv
+df_with_link_text_final.csv
+parsed_data.csv
+preprocessed_data.csv
+preprocessed_data.zip
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
