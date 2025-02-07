@@ -5,6 +5,7 @@ df_with_link_text_final.csv
 parsed_data.csv
 preprocessed_data.csv
 preprocessed_data.zip
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
