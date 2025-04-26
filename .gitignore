@@ -12,6 +12,23 @@ df_sample3.csv
 df_sample4.csv
 df_with_marking_final.csv
 df_all_cleaned.csv
+3k_1.csv
+3k_2.csv
+3k_3.csv
+df_cleaned_full.csv
+df_with_marking_final1.csv
+catboost_info/
+df_with_marking_final_rel.csv
+verdicts_with_c.csv
+verdicts_with_fff.csv
+preprocessed_data1.csv
+preprocessed_data1.zip
+sampled_data.zip
+wriwoep.ipynb
+verdicts_alina.zip
+df_labeled_all.csv
+df_labeled_all.zip
+df_labeled_all_final.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
