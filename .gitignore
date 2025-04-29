@@ -30,6 +30,17 @@ df_labeled_all.csv
 df_labeled_all.zip
 df_labeled_all_final.csv
 
+36k.csv.zip
+df_labeled_all_final22.csv
+df_labeled_all_final23.csv
+df_r.zip
+
+ok.ipynb
+predictions_checkpoint.pkl
+prep_df3.2.csv
+prep_df3.csv
+prep_llm.csv
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
