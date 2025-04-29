@@ -3,7 +3,7 @@ import joblib
 
 models = {
           "gender_accused" : {
-           "file" : 'crime_motive_model.joblib',
+           "file" : 'catboost_model_gender_.joblib',
            "model" : None
            },
 
