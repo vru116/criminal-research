@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #fff;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 12px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+table {
+ border-collapse: collapse;
+}
+
+td {
+  padding: 2px 10px 0px 0px;
+}
+
+#res {
+  padding: 0px 0px 10px 0px;
+ }
+ 
+</style>
+
+<script>
+
+let models = [ {
+				name: "gender_accused", 
+				caption: "Пол преступника",
+				features: ['motive', 
+					  	   'prior_convictions',
+						   'relationship_between_accused_and_victim',
+			 		       'crime_region',
+						   'location',
+						   'method',
+					       'time_of_day',
+						   'day_of_week', 
+						   'season',
+					       'alcohol',
+						   'drugs',
+						   'mental_disorder',
+						   'gender_victim',
+						   'cruelty',
+						   'intentional',
+						   'precrime_argument',
+						   'prison_term',
+						   ]
+				   },
+			   {
+				name: "prior_convictions", 
+				caption: "Наличие судимостей",
+				features: ['motive', 
+				           'gender_accused',
+					  	   /*'prior_convictions',*/
+						   'relationship_between_accused_and_victim',
+			 		       'crime_region',
+						   'location',
+						   'method',
+					       'time_of_day',
+						   'day_of_week', 
+						   'season',
+					       'alcohol',
+						   'drugs',
+						   'mental_disorder',
+						   'gender_victim',
+						   'cruelty',
+						   'intentional',
+						   'precrime_argument',
+						   'prison_term']
+				   },
+			   {
+				name: "location", 
+				caption: "Место совершения убийства",
+				features: ['motive', 
+				           'gender_accused',
+					  	   'prior_convictions',
+						   'relationship_between_accused_and_victim',
+			 		       'crime_region',
+						   /*'location',*/
+						   'method',
+					       'time_of_day',
+						   'day_of_week', 
+						   'season',
+					       'alcohol',
+						   'drugs',
+						   'mental_disorder',
+						   'gender_victim',
+						   'cruelty',
+						   'intentional',
+						   'precrime_argument',
+						   'prison_term']
+				   },
+			   {
+				name: "gender_victim", 
+				caption: "Пол жертвы",
+				features: ['motive', 
+				           'gender_accused',
+					  	   'prior_convictions',
+						   'relationship_between_accused_and_victim',
+			 		       'crime_region',
+						   'location',
+						   'method',
+					       'time_of_day',
+						   'day_of_week', 
+						   'season',
+					       'alcohol',
+						   'drugs',
+						   'mental_disorder',
+						   /*'gender_victim',*/
+						   'cruelty',
+						   'intentional',
+						   'precrime_argument',
+						   'prison_term']
+				   },
+			   {   
+				name: "prison_term", 
+				caption: "Срок наказания",
+				features: ['motive', 
+				           'gender_accused',
+					  	   'prior_convictions',
+						   'relationship_between_accused_and_victim',
+			 		       'crime_region',
+						   'location',
+						   'method',
+					       'time_of_day',
+						   'day_of_week', 
+						   'season',
+					       'alcohol',
+						   'drugs',
+						   'mental_disorder',
+						   'gender_victim',
+						   'cruelty',
+						   'intentional',
+						   'precrime_argument',
+						   /*'prison_term'*/
+						   ]
+				   },
+			   {
+				name: "alcohol", 
+				caption: "Алкоголь",
+				features: ['motive', 
+				           'gender_accused',
+					  	   'prior_convictions',
+						   'relationship_between_accused_and_victim',
+			 		       'crime_region',
+						   'location',
+						   'method',
+					       'time_of_day',
+						   'day_of_week', 
+						   'season',
+					       /*'alcohol',*/
+						   'drugs',
+						   'mental_disorder',
+						   'gender_victim',
+						   'cruelty',
+						   'intentional',
+						   'precrime_argument',
+						   'prison_term'
+						   ]
+				   },
+			   {
+				name: "motive", 
+				caption: "Мотив убийства",
+				features: [/*'motive', */
+				           'gender_accused',
+					  	   'prior_convictions',
+						   'relationship_between_accused_and_victim',
+			 		       'crime_region',
+						   'location',
+						   'method',
+					       'time_of_day',
+						   'day_of_week', 
+						   'season',
+					       'alcohol',
+						   'drugs',
+						   'mental_disorder',
+						   'gender_victim',
+						   'cruelty',
+						   'intentional',
+						   'precrime_argument',
+						   'prison_term'
+						   ]
+				   },
+			   {
+				name: "method", 
+				caption: "Метод убийства",
+				features: ['motive', 
+				           'gender_accused',
+					  	   'prior_convictions',
+						   'relationship_between_accused_and_victim',
+			 		       'crime_region',
+						   'location',
+						   /* 'method', */
+					       'time_of_day',
+						   'day_of_week', 
+						   'season',
+					       'alcohol',
+						   'drugs',
+						   'mental_disorder',
+						   'gender_victim',
+						   'cruelty',
+						   'intentional',
+						   'precrime_argument',
+						   'prison_term'
+						   ]
+				   },
+				   
+				 ]
+				 
+let model_features = [
+			 {
+			  name : "accused",
+			  caption : "Преступник",
+			  items : [
+				{
+				name: "gender_accused", 
+				caption: "Пол преступника",
+				type: "select",
+				values: ["мужчина", "женщина"],
+				empty: "",
+				},
+				{
+				name: "alcohol", 
+				caption: "Алкоголь",
+				type: "select",
+				values: ["да", "нет"],
+				empty: "неизвестно",
+				},
+				{
+				name: "drugs", 
+				caption: "Наркотики",
+				type: "select",
+				values: ["да", "нет"],
+				empty: "неизвестно",
+				},
+				{
+				name: "mental_disorder", 
+				caption: "Псих. сост.",
+				type: "select",
+				values: ["да", "нет"],
+				empty: "неизвестно",
+				},
+				{
+				name: "relationship_between_accused_and_victim", 
+				caption: "Отношение к жертве",
+				type: "text",
+				empty: "",
+				},
+				{
+				name: "prior_convictions", 
+				caption: "Судимость",
+				type: "select",
+				values: ["да", "нет"],
+				empty: "",
+				},
+				{
+				name: "prison_term", 
+				caption: "Срок заключения",
+				type: "text",
+				empty: "",
+				},
+				]
+			},
+  		    {
+			  name : "victim",
+			  caption : "Жертва",
+			  items : [
+				{
+				name: "gender_victim", 
+				caption: "Пол жертвы",
+				type: "select",
+				values: ["мужчина", "женщина"],
+				empty: "",
+				}
+				]
+			},
+  		    {
+			  name : "features",
+			  caption : "Общие признаки",
+			  items : [
+				{
+				name: "time_of_day", 
+				caption: "Время",
+				type: "select",
+				values: ["утро", "день", "вечер", "ночь"],
+				empty: "неизвестно",
+				},
+				{
+				name: "day_of_week", 
+				caption: "День недели",
+				type: "select",
+				values: ["понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье"],
+				empty: "неизвестно",
+				},
+				{
+				name: "season", 
+				caption: "Время года",
+				type: "select",
+				values: ["зима", "весна", "лето", "осень"],
+				empty: "неизвестно",
+				},
+				{
+				name: "crime_region", 
+				caption: "Регион",
+				type: "text",
+				empty: "",
+				},
+				{
+				name: "location", 
+				caption: "Место",
+				type: "text",
+				empty: "",
+				},
+				{
+				name: "method", 
+				caption: "Метод",
+				type: "text",
+				empty: "неизвестно",
+				},
+				{
+				name: "cruelty", 
+				caption: "Жестокость",
+				type: "select",
+				values: ["жестокое", "не жестокое"],
+				empty: "неизвестно",
+				},
+				{
+				name: "motive", 
+				caption: "Мотив",
+				type: "text",
+				empty: "",
+				},
+				{
+				name: "precrime_argument", 
+				caption: "Ссора",
+				type: "select",
+				values: ["была", "нет"],
+				empty: "",
+				},
+				{
+				name: "intentional", 
+				caption: "Намеренное",
+				type: "select",
+				values: ["умышленное", "неумешленное"],
+				empty: "",
+				},
+				]
+			},
+			];
+			
+			
+let results = {};
+let result_order = [];
+let current_model = null;
+
+function updateTable()
+{
+  s = '<table>';
+  ids = 0;
+  
+   for (k=0;k<result_order.length;k++)
+   {
+     nm = result_order[k];
+	 o = null;
+	 tb = null;
+	 for (n=0; n<model_features.length; n++)
+	{
+		tb = model_features[n];
+		for (i=0; i<tb.items.length; i++)
+		{
+		 if (tb.items[i].name == nm) { o = tb.items[i]; break; }
+		}
+		if (o != null) break;
+	}
+
+    if (o != null)
+	if ((current_model != null)&&(current_model.features.includes(o.name)))
+		if (results.hasOwnProperty(o.name))
+			if (results[o.name] != null)
+			{
+				s = s +'<tr style="background-color: ' + ((ids & 1) ? "#eee" : "#fff") + '">'+'<td>' /*+ tb.caption + '</td><td>' */+ o.caption + "</td>";
+				ids++;
+				s = s + "<td>" + results[o.name] + "</td></tr>";
+			}
+  }
+	 
+  /*
+  for (n=0; n<model_features.length; n++)
+  {
+	tb = model_features[n];
+    s = s +'<tr style="background-color: #ffc"><td colspan=2><i>' + tb.caption + "</i></td></tr>";
+	for (i=0; i<tb.items.length; i++)
+	{
+		o = tb.items[i];
+		if ((current_model != null)&&(current_model.features.includes(o.name)))
+		if (results.hasOwnProperty(o.name))
+			if (results[o.name] != null)
+			{
+				s = s +'<tr style="background-color: ' + ((ids & 1) ? "#eee" : "#fff") + '"><td>' + o.caption + "</td>";
+				ids++;
+				s = s + "<td>" + results[o.name] + "</td></tr>";
+			}
+	}
+  }
+  */
+  s = s + "</table>";
+  document.getElementById("res").innerHTML = s;
+}
+			
+
+function textChangeFunction(o)
+{
+    results[o.name] = o.value;
+	if (!result_order.includes(o.name)) result_order.push(o.name);
+	updateTable();
+	//console.log(results);
+}
+
+function selectChangeFunction(o)
+{
+    results[o.name] = o.value;
+	if (!result_order.includes(o.name)) result_order.push(o.name);
+	updateTable();
+	//console.log(results);
+}
+
+function openTab(evt, tabName) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+function buildInputs() {
+
+  mname = location.hash.substr(1);
+  //console.log(mname);
+  for (n=0;n<models.length;n++)
+  {
+   if (models[n].name == mname) { current_model = models[n]; break; }
+  }
+  
+  if (current_model)
+  {
+  
+  s0 = '<div class="tab">'; 
+  s1 = '';
+  for (n=0; n<model_features.length; n++)
+  {
+    tb = model_features[n];
+    s0 += '<button class="tablinks" onclick="openTab(event, ' + "'" + tb.name + "'" + ')">' + tb.caption + '</button>';
+	
+	s = '<div id="' + tb.name + '" class="tabcontent">';
+	s += "<table>";
+	//s += "<tr><td>111</td><td>222</td></tr>";
+	for (i=0; i<tb.items.length; i++)
+	{
+		o = tb.items[i];
+		if (!current_model.features.includes(o.name)) continue;
+		s += "<tr><td>" + o.caption + "</td><td>";
+		if (o.type == "text")
+		{
+			s += '<input type="text" name="'+o.name+'" value="" onchange="textChangeFunction(this)" />';
+		}
+		else if (o.type == "select")
+		{
+			s += '<select name="'+o.name+'" onchange="selectChangeFunction(this)">';
+			s += '<option value="'+o.empty+'" selected>'+o.empty+'</option>';
+			for (j=0; j<o.values.length; j++)
+			{
+				s += '<option value="'+o.values[j]+'">' + o.values[j] + '</option>';
+			}
+		}
+		s += "</td></tr>";
+	}
+	s += "</table></div>";
+	s1 = s1 + s;
+  }
+  s0 += '</div>'
+  
+  
+  document.getElementById("modelName").innerHTML = current_model.caption;
+  document.getElementById("inp").innerHTML = s0 + s1;
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  if (tablinks.length > 0)
+    tablinks[0].click();
+	
+  updateTable();
+  }
+
+}
+
+function removeLastItem()
+{
+    console.log(results);
+	if (result_order.length > 0)
+	{
+	   s = result_order.pop();
+	   delete results[s];
+    }
+	updateTable();
+}
+
+function runModel()
+{
+   if (current_model == null) return;
+   req = "model="+encodeURIComponent(current_model.name);
+   
+   for (n=0; n<model_features.length; n++)
+   {
+	 tb = model_features[n];
+ 	 for (i=0; i<tb.items.length; i++)
+	 {
+		o = tb.items[i];
+		if (!current_model.features.includes(o.name)) continue;
+		if (results.hasOwnProperty(o.name) && (results[o.name] != null))
+			{
+				req = req + "&" + o.name + "=" + encodeURIComponent(results[o.name]);
+			}
+			else
+			{
+				req = req + "&" + o.name + "=" + encodeURIComponent(o.empty);
+			}
+			
+	}
+	}
+  // TODO
+  document.getElementById("answer").innerHTML = '<iframe src="result.html?'+req+'" />';
+  document.getElementById("div_answer").style.display="block";
+}
+
+</script>
+
+</head>
+
+<body onload="buildInputs()">
+
+<h1 id="modelName">Model</h1>
+
+<table width="100%">
+<tr>
+<td width="66%" valign="top">
+<div id="inp"></div>
+</td>
+<td width="33%" valign="top">
+<p>ВАШИ ДАННЫЕ</p>
+<div id="res"></div>
+<button onclick="removeLastItem()">УДАЛИТЬ</button>
+<button onclick="runModel()">ОК</button>
+<div id="div_answer" style="display:none">
+<p>ОТВЕТ</p>
+<p id="answer"></p>
+</div>
+</td>
+</tr>
+</table>
+
+</body>
+</html>
+

@@ -1,0 +1,72 @@
+<html>
+<head>
+<style>
+#txt {
+ background-color: #FFFF00;
+ padding: 10px;
+ }
+</style>
+<script>
+let models = [
+			  {name: "gender_accused",
+			   img: "1.png"
+			  },
+			  {name: "prior_convictions",
+			   img: "2.png"
+			  },
+			  {name: "location",
+			   img: "3.png"
+			  },
+			  {name: "gender_victim",
+			   img: "4.png"
+			  },
+			  {name: "prison_term",
+			   img: "5.png"
+			  },
+			  {name: "alcohol",
+			   img: "6.png"
+			  },
+			  {name: "motive",
+			   img: "7.png"
+			  },
+			  {name: "method",
+			   img: "8.png"
+			  }
+			  ];
+			  
+function putImages()
+{
+    b = document.getElementsByTagName('body')[0];
+	s = '<div id="txt">НАДПИСЬ</div>';
+	for (i=0; i<models.length; i++)
+	{
+	    o = models[i];
+	    s = s + '<a href="model.html#'+o.name+'"><img id="img_'+o.name+'" src="static/'+o.img+'" width="150px" /></a>';
+	}
+	b.innerHTML = s;
+	wx = window.innerWidth / 2;
+	wy = window.innerHeight / 2;
+	cx = window.innerWidth / 2;
+	cy = window.innerHeight / 2;
+	for (i=0; i<models.length; i++)
+	{
+	    o = models[i];
+		im = document.getElementById("img_" + o.name);
+		im.style.position="fixed";
+		angle = -45 + (360 / models.length) * i;
+		if (angle > 180) angle -= 360;
+		im.style.left = cx + wx * Math.sin(angle * 3.14 / 180) - (75 + 75 * Math.sin(angle * 3.14 / 180));
+		im.style.top = cy - wy * Math.cos(angle * 3.14 / 180) - (75 - 75 * Math.cos(angle * 3.14 / 180));
+	}
+
+	d = document.getElementById("txt");
+	d.style.position="fixed";
+	d.style.left = cx - d.offsetWidth / 2;
+	d.style.top  = cy - d.offsetHeight / 2;
+}
+</script>
+</head>
+
+<body background="static/background.jpeg" onload="putImages()">
+</body>
+</html>
